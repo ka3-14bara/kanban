@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .grid-container {
+                display:grid;
+                grid-template-columns: 33% 33% 33%;
+            }
+            .blocks {
+                background-color: rgb(248, 248, 248); 
+                margin: 0% 2%;
+                padding-bottom: 10%;
+                border-radius: 10px;
+                position: relative;
+            }
+            .card-headings {
+                padding-left: 5%;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 700;
+                font-size: larger;
+            }
+            .buttons {
+                width: 90%;
+                margin-bottom: 5%;
+                margin-left: 5%;
+                margin-right: 5%;
+                padding: 5px;
+                border-radius: 5px;
+                display: block;
+                box-sizing: border-box;
+                text-align: center;
+                border: none;
+                background-color: rgb(0, 138, 224);
+                color: white;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 700;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+            .hovered:hover {
+                background-color: rgb(0, 89, 145);
+                color: white;
+            }
+            .usage-area {
+                min-height: 30vh;
+            }
+            .task-div {
+                font-family: 'Roboto', sans-serif;
+                font-weight: 500;
+                font-size: 18px;
+                border-radius: 5px;
+                border: solid rgb(248, 248, 248);
+                border-width: 0.1em;
+                margin: 5%;
+                padding: 5px;
+                background-color: gainsboro;
+            }
+        </style>
+    </head>
+    <body style="background-color: lightgray;">
+        <header>
+
+        </header>
+        <main>
+            <div class="grid-container">
+
+                <section class="blocks">
+                    <p class="card-headings">To Do</p>
+                    <div id="content" class="usage-area" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"> 
+                    </div>
+                    <button class="buttons hovered" onclick="showPrompt()">Добавить</button>
+                </section>
+
+                <section class="blocks">
+                    <p class="card-headings">In Progress</p>
+                    <div id="inProgress" class="usage-area" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+                    </div>
+                    <button class="buttons hovered" onclick="editElement()">Изменить</button>
+                </section>
+
+                <section class="blocks">
+                    <p class="card-headings">Done</p>
+                    <div class="usage-area" id="done" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">  
+                    </div>
+                    <button class="buttons hovered" onclick="removeElement()">Удалить</button>
+                </section>
+            </div>
+        </main>
+        <footer>
+
+        </footer>
+
+        <script>
+            let divsID = NaN;
+
+            document.addEventListener('click', function(e) {
+                if(e.target.tagName === 'DIV' && e.target.id.length === 3) {
+                    divsID = (e.target.id);
+                    e.target.style.backgroundColor = 'gray';
+                }
+            });
+
+            function dragstartHandler(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+            }
+
+            function dragoverHandler(ev) {
+                ev.preventDefault();
+            }
+
+            function dropHandler(ev) {
+                ev.preventDefault();
+                const data = ev.dataTransfer.getData("text");
+                ev.target.appendChild(document.getElementById(data));
+            }
+
+            function showPrompt() {
+                const content = document.getElementById('content');
+                const input = prompt("Введите задачу:");
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                const charactersLength = characters.length;
+
+                if (input != null) {
+                    const newDiv = document.createElement('div');
+                    newDiv.id = characters.charAt(Math.floor(Math.random() * charactersLength)) + characters.charAt(Math.floor(Math.random() * charactersLength)) + characters.charAt(Math.floor(Math.random() * charactersLength));
+                    newDiv.className = "task-div";
+                    newDiv.draggable = "true";
+                    newDiv.setAttribute('ondragstart', "dragstartHandler(event)");
+                    newDiv.textContent = " - " + input;
+                    content.appendChild(newDiv);
+                }
+            }
+
+            function editElement() {
+                const divElement = document.getElementById(divsID);
+                if (divElement) {
+                    const newText = prompt("Введите задачу:", document.getElementById(divsID).textContent);
+                    if (newText != null) {
+                        document.getElementById(divsID).textContent = " - " + newText;
+                        document.getElementById(divsID).style.backgroundColor = 'gainsboro';
+                        divsID = NaN;
+                    }
+                }
+            }
+
+            function removeElement() {
+                const divElement = document.getElementById(divsID);
+                if (divElement) {
+                    divElement.remove();
+                    divsID = NaN;
+                }
+            }
+        </script>
+    </body>
+</html>
