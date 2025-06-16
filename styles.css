@@ -1,0 +1,54 @@
+.grid-container {
+    display:grid;
+    grid-template-columns: 33% 33% 33%;
+}
+.blocks {
+    background-color: rgb(248, 248, 248); 
+    margin: 0% 2%;
+    padding-bottom: 10%;
+    border-radius: 10px;
+    position: relative;
+}
+.card-headings {
+    padding-left: 5%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: larger;
+}
+.buttons {
+    width: 90%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+    background-color: rgb(0, 138, 224);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.hovered:hover {
+    background-color: rgb(0, 89, 145);
+    color: white;
+}
+.usage-area {
+    min-height: 30vh;
+}
+.task-div {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 5px;
+    border: solid rgb(248, 248, 248);
+    border-width: 0.1em;
+    margin: 5%;
+    padding: 5px;
+    background-color: gainsboro;
+}
